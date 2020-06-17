@@ -56,7 +56,7 @@ app.delete("/api/notes/:id", async (req, res) => {
 
         for (note of newArray) {
             if (note.id == newDelete) {
-                
+                newArray.pop(note);
             }
         }
     }
