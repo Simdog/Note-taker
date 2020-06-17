@@ -46,7 +46,21 @@ try {
 console.log(err);
 }
 });
-app.delete("")
+app.delete("/api/notes/:id", async (req, res) => {
+    console.log("delete is working");
+    try {
+
+        let newDelete = req.params.id;
+
+        let newArray = JSON.parse(await readAsync(path.join(__dirname, "/db/db.json"), 'utf-8'));
+
+        for (note of newArray) {
+            if (note.id == newDelete) {
+                
+            }
+        }
+    }
+})
 
 app.listen(PORT, function (){ 
     console.log("App listening to PORT:" + PORT);
