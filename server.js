@@ -50,13 +50,15 @@ app.delete("/api/notes/:id", (req, res) => {
     console.log("delete is working");
     let newDelete = req.params.id;
     let newData =  fs.readFileSync(path.join(__dirname, "/db/db.json"), 'utf-8');
-    let newArray = JSON.parse(fileData);
+    let newArray = JSON.parse(newData);
     for (note of newArray) {
         if (note.id == newDelete) {
             newArray.pop(note);
             fs.writeFileSync(path.join(__dirname, "/db/db.json"), JSON.stringify(newArray));
         }
     }
+
+    res.json({message: "File Deleted"});
 
 
 
