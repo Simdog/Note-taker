@@ -46,21 +46,42 @@ try {
 console.log(err);
 }
 });
-app.delete("/api/notes/:id", async (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
     console.log("delete is working");
-    try {
-
-        let newDelete = req.params.id;
-
-        let newArray = JSON.parse(await readAsync(path.join(__dirname, "/db/db.json"), 'utf-8'));
-
-        for (note of newArray) {
-            if (note.id == newDelete) {
-                newArray.pop(note);
-            }
+    let newDelete = req.params.id;
+    let newData =  fs.readFileSync(path.join(__dirname, "/db/db.json"), 'utf-8');
+    let newArray = JSON.parse(fileData);
+    for (note of newArray) {
+        if (note.id == newDelete) {
+            newArray.pop(note);
+            fs.writeFileSync(path.join(__dirname, "/db/db.json"), JSON.stringify(newArray));
         }
     }
-})
+
+
+
+    // try {
+
+    //     let newDelete = req.params.id;
+
+    //     let newArray = JSON.parse(await readAsync(path.join(__dirname, "/db/db.json"), 'utf-8'));
+
+    //     for (note of newArray) {
+    //         if (note.id == newDelete) {
+    //             newArray.pop(note);
+    //         }
+    //     }
+    //     await writeAsync(path.join(__dirname, "/db/db.json"), JSON.stringify(newArray));
+    //     return res.json({ ok:true })
+    // } catch (err) {
+    //     console.log(err);
+    // }
+});
+
+app.get("*", function(req, res) {
+    console.log("get request working");
+    res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 app.listen(PORT, function (){ 
     console.log("App listening to PORT:" + PORT);
